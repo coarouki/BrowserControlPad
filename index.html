@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MAME Gamepad (WebSocket)</title>
+</head>
+<body>
+    <h2>Gamepad</h2>
+    <button onclick="send('up')">⬆️</button><br>
+    <button onclick="send('left')">⬅️</button>
+    <button onclick="send('down')">⬇️</button>
+    <button onclick="send('right')">➡️</button><br>
+    <button onclick="send('a')">A</button>
+    <button onclick="send('b')">B</button><br>
+    <button onclick="send('start')">Start</button>
+    <button onclick="send('select')">Select</button>
+
+    <script>
+        const socket = new WebSocket("ws://192.168.0.53:8765");
+
+        socket.onopen = () => console.log("WebSocket connected");
+        socket.onerror = (e) => console.error("WebSocket error", e);
+
+        function send(key) {
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.send(key);
+            } else {
+                alert("WebSocket not connected");
+            }
+        }
+    </script>
+</body>
+</html>
